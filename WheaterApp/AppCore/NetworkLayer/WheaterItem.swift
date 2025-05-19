@@ -7,20 +7,20 @@
 
 import Foundation
 
-struct WheaterResponse: Decodable {
-    let location: WheaterLocation
-    let currentWheater: CurrentWheater
+struct WeatherResponse: Decodable {
+    let location: WeaterLocation
+    let currentWheater: CurrentWeather
     let forecast: Forecast
 }
 
-struct WheaterLocation: Decodable {
+struct WeaterLocation: Decodable {
     let name: String
 
 }
 
-struct CurrentWheater: Decodable {
+struct CurrentWeather: Decodable {
     let temp: Double?
-    let condition: WheaterCondition
+    let condition: WeatherCondition
 
     enum CodingKeys: String, CodingKey {
         case temp = "temp_c"
@@ -28,7 +28,7 @@ struct CurrentWheater: Decodable {
     }
 }
 
-struct WheaterCondition: Decodable {
+struct WeatherCondition: Decodable {
     let conditionDescription: String
     let conditionIconReference: String
 
