@@ -13,7 +13,5 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = CustomColors.day.getColor(type: .text)
     }
-
-    
 }
 
