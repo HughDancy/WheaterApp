@@ -8,50 +8,47 @@
 import Foundation
 
 struct WeatherResponse: Decodable {
-    let location: WeaterLocation
-    let currentWheater: CurrentWeather
-    let forecast: Forecast
+    var location: WeaterLocation?
+    var forecast: Forecast?
 }
 
 struct WeaterLocation: Decodable {
-    let name: String
-
+    let name: String?
 }
 
-struct CurrentWeather: Decodable {
-    let temp: Double?
-    let condition: WeatherCondition
+struct Forecast: Decodable {
+    var forecastDay: [ForecastDay]
+
+    enum CodingKeys: String, CodingKey  {
+        case forecastDay = "forecastday"
+    }
+}
+
+struct ForecastDay: Decodable {
+    var date: String
+    var day: Day
+}
+
+struct Day: Decodable {
+    var temperature: Decimal?
+    var maxWindSpeed: Decimal?
+    var avghumidity: Int?
+    var condition: WeatherCondition?
 
     enum CodingKeys: String, CodingKey {
-        case temp = "temp_c"
+        case temperature = "avgtemp_c"
+        case maxWindSpeed = "maxwind_kph"
+        case avghumidity
         case condition
     }
 }
 
 struct WeatherCondition: Decodable {
-    let conditionDescription: String
-    let conditionIconReference: String
+    var conditionDescription: String?
+    var conditionIconReference: String?
 
     enum CodingKeys: String, CodingKey {
         case conditionDescription = "text"
         case conditionIconReference = "icon"
-    }
-}
-
-struct Forecast: Decodable {
-    let forecastDay: [ForecastDay]
-}
-
-struct ForecastDay: Decodable {
-    let day: Day
-}
-
-struct Day: Decodable {
-    let maxWindSpeed: Double
-    let avghumidity: Int
-
-    enum CodingKeys: String, CodingKey {
-        case maxWindSpeed = "maxwind_kph"
-        case avghumidity
     }
 }
