@@ -7,23 +7,36 @@
 
 import UIKit
 
+protocol MainSceneDisplayLogic: AnyObject {
+    func getViewModel(_ viewModel: MainModel.ViewModel)
+}
+
 final class MainSceneViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    
+    // MARK: -
+    var interactor: MainSceneBussinessLogic?
+    
+    // MARK: - Private properties
+    private var viewModel: MainModel.ViewModel?
+    
+    private var mainView: MainSceneView? {
+        guard isViewLoaded else { return nil }
+        return view as? MainSceneView
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK: - Life cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // MARK: - Fix this to custom choosing
+        interactor?.makeWeatherRequest(MainModel.Request(cityName: "Antalia"))
+//        let condition = ConditionInfo(condition: "Sunny", icon: "sun.max.fill")
+        view = MainSceneView(weatherInfo: viewModel?.weatherInfo, conditionInfo: viewModel?.conditionIndo , forecast: viewModel?.forecast)
     }
-    */
 
+}
+
+extension MainSceneViewController: MainSceneDisplayLogic {
+    func getViewModel(_ viewModel: MainModel.ViewModel) {
+        self.viewModel = viewModel
+    }
 }

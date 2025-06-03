@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit.UIImage
 
 final class WheaterNetworkManager {
     // MARK: - Private propertie
@@ -58,5 +59,45 @@ final class WheaterNetworkManager {
         } catch let error {
             print("[WheaterNetworkManager] Error 1 with fetching data - \(error.localizedDescription)")
         }
+    }
+    
+     func downloadImage(simpleURL: String? ) async -> UIImage?  {
+        if let simpleURL = simpleURL {
+            guard let url = URL(string: simpleURL) else {
+                print("[WheaterNetworkManager] 2 - problem with download image")
+                return nil
+               }
+
+               // Разрешаем HTTP (если URL начинается с http://)
+               let configuration = URLSessionConfiguration.default
+               configuration.requestCachePolicy = .returnCacheDataElseLoad
+
+              
+               if simpleURL.starts(with: "https://") {
+                   configuration.waitsForConnectivity = true
+               }
+
+               let session = URLSession(configuration: configuration)
+
+               // Асинхронно загружаем данные
+            do {
+                let (data, response) = try await session.data(from: url)
+
+                // Проверяем, что ответ сервера успешный (200-299)
+                guard let httpResponse = response as? HTTPURLResponse,
+                      (200...299).contains(httpResponse.statusCode) else {
+                    throw URLError(.badServerResponse)
+                }
+                return UIImage(data: data)
+            } catch let error {
+                print("[WheaterNetworkManager] Error 3 - Problem with UIImage data ")
+                return nil
+            }
+        } else {
+            return nil
+        }
+   
+           // Преобразуем Data в UIImage
+          
     }
 }

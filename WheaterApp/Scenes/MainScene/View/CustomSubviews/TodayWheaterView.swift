@@ -38,6 +38,7 @@ final class TodayWheaterView: UIView {
         let label = UILabel()
         label.font = UIFont.getPoppinsFonr(type: .medium, size: 20)
         label.textAlignment = .center
+        
         return label
     }()
 
@@ -60,6 +61,7 @@ final class TodayWheaterView: UIView {
         let label = UILabel()
         label.font = UIFont.getPoppinsFonr(type: .medium, size: 30)
         label.textAlignment = .center
+        label.text = "%@ ℃"
         return label
     }()
 
@@ -105,6 +107,7 @@ final class TodayWheaterView: UIView {
         self.weatherInfo = weather
         self.conditionInfo = condition
         super.init(frame: .zero)
+        setupBackground(condition)
         setupView()
     }
 
@@ -117,6 +120,7 @@ final class TodayWheaterView: UIView {
         backgroundColor = .clear
         setupHierarchy()
         setupLayout()
+        setupElements()
     }
 
     // MARK: - Setup Hierarhcy
@@ -142,12 +146,12 @@ final class TodayWheaterView: UIView {
 
         nameOfCity.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
-            make.centerY.equalToSuperview()
+            make.centerX.equalToSuperview()
         }
 
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(nameOfCity.snp.bottom).offset(5)
-            make.centerY.equalToSuperview()
+            make.centerX.equalToSuperview()
         }
 
         temperatureStackView.snp.makeConstraints { make in
@@ -168,6 +172,7 @@ final class TodayWheaterView: UIView {
         }
 
         windSpeedLabel.snp.makeConstraints { make in
+            make.top.equalTo(conditionLabel.snp.bottom).offset(20)
             make.leading.equalTo(windIcon.snp.trailing).offset(10)
         }
 
@@ -178,11 +183,19 @@ final class TodayWheaterView: UIView {
         }
 
         avghumidityLabel.snp.makeConstraints { make in
+            make.top.equalTo(windSpeedLabel.snp.bottom).offset(15)
             make.leading.equalTo(avghumidityIcon.snp.trailing).offset(10)
         }
     }
+    
+    // MARK: - Setup background
+    private func setupBackground(_ condition: ConditionInfo?) {
+        let type = TypeOfCondition.snow.getType(condition: conditionInfo?.condition)
+        let colorManager = ConditionColor(type: type)
+        colorAppearence = colorManager.getMainColor()
+    }
 
-    // MARK: -
+    // MARK: - TODO: - Fix this for view
     private func setupElements() {
         containerView.backgroundColor = colorAppearence?.mainColor
         conditionIcon.image = UIImage(systemName: "sun.max.fill")
@@ -191,7 +204,7 @@ final class TodayWheaterView: UIView {
         nameOfCity.textColor = colorAppearence?.textColor
         dateLabel.text = "20 May 2025"
         dateLabel.textColor = colorAppearence?.textColor
-        temperatureLabel.text = "19 C"
+        temperatureLabel.text = String(format: "%@ ℃", "19")
         temperatureLabel.textColor = colorAppearence?.textColor
         conditionLabel.text = "Sunny"
         conditionLabel.textColor = colorAppearence?.textColor
@@ -203,3 +216,4 @@ final class TodayWheaterView: UIView {
         avghumidityLabel.textColor = colorAppearence?.textColor
     }
 }
+

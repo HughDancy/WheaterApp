@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit.UIImage
 
 struct WeatherInfo {
     var temperature: String
@@ -14,7 +15,7 @@ struct WeatherInfo {
 }
 
 struct ConditionInfo {
-    var condition: String
+    var condition: UIImage?
     var icon: String
 }
 
@@ -33,9 +34,9 @@ enum MainModel {
     }
 
     struct ViewModel {
-        var weatherInfo: WeatherInfo
-        var conditionIndo: ConditionInfo
-        var forecast: Forecast
+        var weatherInfo: WeatherInfo?
+        var conditionIndo: ConditionInfo?
+        var forecast: ForecastInfo?
 
     }
 }
