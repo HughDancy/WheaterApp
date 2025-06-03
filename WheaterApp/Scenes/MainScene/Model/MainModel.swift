@@ -8,6 +8,7 @@
 import Foundation
 import UIKit.UIImage
 
+   // MARK: - Support Structs
 struct WeatherInfo {
     var temperature: String
     var windSpeed: String
@@ -15,15 +16,15 @@ struct WeatherInfo {
 }
 
 struct ConditionInfo {
-    var condition: UIImage?
-    var icon: String
+    var condition: String
+    var icon: UIImage?
 }
 
 struct ForecastInfo {
     var weaterInfo: [WeatherInfo]
     var conditionInfo: [ConditionInfo]
 }
-
+  // MARK: - Main Model
 enum MainModel {
     struct Request {
         var cityName: String
@@ -31,12 +32,10 @@ enum MainModel {
 
     struct Response {
         var weatherData: WeatherResponse?
+        var icon: UIImage?
     }
 
     struct ViewModel {
-        var weatherInfo: WeatherInfo?
-        var conditionIndo: ConditionInfo?
         var forecast: ForecastInfo?
-
     }
 }

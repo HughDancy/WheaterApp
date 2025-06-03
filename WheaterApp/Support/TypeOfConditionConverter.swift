@@ -14,7 +14,33 @@ enum TypeOfCondition {
     case rain
     case snow
 
-    func getType(condition: String?) -> Self? {
+    func getType(condition: String?) -> TypeOfCondition? {
+        guard let text = condition?.lowercased() else { return nil}
+        let cloudy = ["cloudy", "overcast", "mist", "fog"]
+        let rain = ["rain, drizzle", "thundery"]
+        let snow = ["sleet", "snow", "blizzard", "ice"]
+
+        guard !text.contains("sunny") else {
+            return .sunny
+            }
+
+        guard !text.containsAny(of: cloudy) else {
+            return .cloudy
+           }
+
+        guard !text.containsAny(of: rain) else {
+            return .rain
+           }
+
+        guard !text.containsAny(of: snow) else {
+            return .snow
+           }
+        return nil
+    }
+}
+
+final class TypeConverter {
+    func getType(condition: String?) -> TypeOfCondition? {
         guard let text = condition?.lowercased() else { return nil}
         let cloudy = ["cloudy", "overcast", "mist", "fog"]
         let rain = ["rain, drizzle", "thundery"]

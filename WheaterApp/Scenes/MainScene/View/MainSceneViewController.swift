@@ -30,7 +30,7 @@ final class MainSceneViewController: UIViewController {
         // MARK: - Fix this to custom choosing
         interactor?.makeWeatherRequest(MainModel.Request(cityName: "Antalia"))
 //        let condition = ConditionInfo(condition: "Sunny", icon: "sun.max.fill")
-        view = MainSceneView(weatherInfo: viewModel?.weatherInfo, conditionInfo: viewModel?.conditionIndo , forecast: viewModel?.forecast)
+         view = MainSceneView(forecast: viewModel?.forecast)
     }
 
 }

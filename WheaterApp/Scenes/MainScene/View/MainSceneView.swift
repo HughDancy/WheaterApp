@@ -10,8 +10,8 @@ import UIKit
 final class MainSceneView: UIView {
 
    // MARK: - Private properties
-    private var weatherInfo: WeatherInfo?
-    private var conditionInfo: ConditionInfo?
+//    private var weatherInfo: WeatherInfo?
+//    private var conditionInfo: ConditionInfo?
     private var forecast: ForecastInfo?
     private var colorInfo: ColorAppearence?
 
@@ -23,7 +23,7 @@ final class MainSceneView: UIView {
     }()
     
     private lazy var currentWeatherView: TodayWheaterView = {
-        let currentWeather = TodayWheaterView(weather: weatherInfo, condition: conditionInfo)
+        let currentWeather = TodayWheaterView(weather: forecast?.weaterInfo[0], condition: forecast?.conditionInfo[0])
         return currentWeather
     }()
     
@@ -38,9 +38,7 @@ final class MainSceneView: UIView {
     
 
    // MARK: - Init
-    init(weatherInfo: WeatherInfo?, conditionInfo: ConditionInfo?, forecast: ForecastInfo?) {
-        self.weatherInfo = weatherInfo
-        self.conditionInfo = conditionInfo
+    init(forecast: ForecastInfo?) {
         self.forecast = forecast
         super.init(frame: .zero)
         setupView()

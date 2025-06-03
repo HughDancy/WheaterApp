@@ -190,7 +190,7 @@ final class TodayWheaterView: UIView {
     
     // MARK: - Setup background
     private func setupBackground(_ condition: ConditionInfo?) {
-        let type = TypeOfCondition.snow.getType(condition: conditionInfo?.condition)
+        var type = TypeOfCondition.snow.getType(condition: conditionInfo?.condition)
         let colorManager = ConditionColor(type: type)
         colorAppearence = colorManager.getMainColor()
     }
