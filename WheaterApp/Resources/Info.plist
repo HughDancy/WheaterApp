@@ -8,8 +8,8 @@
 	<string>Geolocation tracking is necessary for the application to determine your city</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Poppins-Semibold</string>
-		<string>Poppins-Medium</string>
+		<string>Poppins-SemiBold.ttf</string>
+		<string>Poppins-Medium.ttf</string>
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>

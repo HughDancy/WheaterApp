@@ -15,8 +15,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-//        window?.rootViewController = MainSceneViewController()
-        window?.rootViewController = SplashViewController()
+        let sceneBuilder = SceneBuilder()
+        let loadingScene = NewUserCheckerManager.shared.checkIsNewUser() ? sceneBuilder.createSplashScene() : sceneBuilder.createMainScene()
+        window?.rootViewController = loadingScene
         window?.makeKeyAndVisible()
     }
 
@@ -47,7 +48,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
+}
 
+extension SceneDelegate {
+    func setRootViewController(_ viewController: UIViewController, animated: Bool = true) {
+        guard let window = self.window else { return }
 
+        if animated {
+            UIView.transition(with: window,
+                              duration: 0.5) {
+                let previousState = UIView.areAnimationsEnabled
+                UIView.setAnimationsEnabled(false)
+                window.rootViewController = viewController
+                UIView.setAnimationsEnabled(previousState)
+            }
+        } else {
+            window.rootViewController = viewController
+        }
+    }
 }
 

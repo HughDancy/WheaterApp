@@ -7,7 +7,15 @@
 
 import UIKit
 
+protocol SplashSceneDisplayLogic: AnyObject {
+    func sendToMainModule()
+}
+
 final class SplashViewController: UIViewController {
+
+    // MARK: - Protocol properties
+    var interactor: SplashSceneBussinessLogic?
+    var router: SplashSceneRoutingLogic? 
 
     private var splashView: SplashView? {
         guard isViewLoaded else { return nil }
@@ -17,5 +25,12 @@ final class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view = SplashView()
+        interactor?.getCurrentCityName()
+    }
+}
+
+extension SplashViewController: SplashSceneDisplayLogic {
+    func sendToMainModule() {
+        router?.goToMainModule()
     }
 }

@@ -16,6 +16,14 @@ final class SplashView: UIView {
         return imageView
     }()
 
+    private lazy var checkLocationLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.getPoppinsFonr(type: .semibold, size: 20)
+        label.textColor = .white
+        label.text = "Определяем Ваше местоположение..."
+        return label
+    }()
+
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView()
         indicatorView.style = .large
@@ -45,6 +53,7 @@ final class SplashView: UIView {
     private func setupHierarchy() {
         addSubview(backgroundImageView)
         sendSubviewToBack(backgroundImageView)
+        addSubview(checkLocationLabel)
         addSubview(activityIndicator)
     }
 
@@ -54,8 +63,13 @@ final class SplashView: UIView {
             make.top.leading.trailing.bottom.equalToSuperview()
         }
 
+        checkLocationLabel.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(-100)
+            make.centerX.equalToSuperview()
+        }
+
         activityIndicator.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-80)
+            make.top.equalTo(checkLocationLabel.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
             make.width.height.equalTo(50)
         }

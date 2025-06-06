@@ -7,13 +7,26 @@
 
 import UIKit
 
-//protocol SceneBuilderProtocol: AnyObject {
-//    func createSplashScene() -> UIViewController
-//}
-//
-//final class SceneBuilder: SceneBuilderProtocol {
-//
-//    func createSplashScene() -> UIViewController {
-//        
-//    }
-//}
+protocol SceneBuilderProtocol: AnyObject {
+    func createSplashScene() -> UIViewController
+    func createMainScene() -> UINavigationController
+}
+
+final class SceneBuilder: SceneBuilderProtocol {
+    // MARK: - Private properties
+    private let splashConfigurator = SplashSceneConfigurator()
+    private let mainSceneConfigurator = MainSceneConfigurator()
+
+    // MARK: - Protocol mehtods
+    func createSplashScene() -> UIViewController {
+        let splashModule = splashConfigurator.createSplashScene(SplashViewController())
+//        let navigationSplash = UINavigationController(rootViewController: splashModule)
+        return splashModule
+    }
+
+    func createMainScene() -> UINavigationController {
+        let mainScene = mainSceneConfigurator.createMainScene(MainSceneViewController())
+        let navigationMainSceneController = UINavigationController(rootViewController: mainScene)
+        return navigationMainSceneController
+    }
+}

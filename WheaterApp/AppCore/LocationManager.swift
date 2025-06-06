@@ -52,10 +52,8 @@ final class LocationManager: NSObject {
 
             if let city = placemark.locality {
                 self.delegate?.getCityName(city: city)
-                print("THIS IS CITY - \(city)")
             } else if let administrativeArea = placemark.administrativeArea {
                 self.delegate?.getCityName(city: administrativeArea)
-                print("THIS IS CITY - \(administrativeArea)")
             } else {
                 self.delegate?.getCityName(city: nil)
             }
