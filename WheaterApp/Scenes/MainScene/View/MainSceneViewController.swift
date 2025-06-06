@@ -18,7 +18,8 @@ final class MainSceneViewController: UIViewController {
     
     // MARK: - Private properties
     private var viewModel: MainModel.ViewModel?
-    
+    private let locationManager = LocationManager()
+
     private var mainView: MainSceneView? {
         guard isViewLoaded else { return nil }
         return view as? MainSceneView
@@ -27,6 +28,7 @@ final class MainSceneViewController: UIViewController {
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationManager.delegate = self
         // MARK: - Fix this to custom choosing
         interactor?.makeWeatherRequest(MainModel.Request(cityName: "Antalia"))
 //        let condition = ConditionInfo(condition: "Sunny", icon: "sun.max.fill")
@@ -39,4 +41,12 @@ extension MainSceneViewController: MainSceneDisplayLogic {
     func getViewModel(_ viewModel: MainModel.ViewModel) {
         self.viewModel = viewModel
     }
+}
+
+extension MainSceneViewController: LocationManagerDelegate {
+    func getCityName(city: String?) {
+        print("IN VIEw CONTORLLER CITY IS - \(city)")
+    }
+    
+    
 }
