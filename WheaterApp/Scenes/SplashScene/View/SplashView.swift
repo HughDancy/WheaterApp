@@ -18,7 +18,9 @@ final class SplashView: UIView {
 
     private lazy var checkLocationLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.getPoppinsFonr(type: .semibold, size: 20)
+        label.font = UIFont.getPoppinsFonr(type: .semibold, size: 18)
+        label.numberOfLines = 0
+        label.lineBreakStrategy = .hangulWordPriority
         label.textColor = .white
         label.text = "Определяем Ваше местоположение..."
         return label
