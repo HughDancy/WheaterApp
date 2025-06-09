@@ -15,19 +15,19 @@ final class MainScenePresenter: MainScenePresentingLogic {
     weak var controller: MainSceneDisplayLogic?
     
     func makeViewModel(_ response: MainModel.Response) {
-        let currentDayIndex = 0
-        let currentItem = response.weatherData?.forecast?.forecastDay[currentDayIndex]
-        let currentTemperature = String(describing: response.weatherData?.forecast?.forecastDay[currentDayIndex].day.temperature)
-        let currentWindSpeed = String(describing: response.weatherData?.forecast?.forecastDay[currentDayIndex].day.maxWindSpeed)
-        let currentAvg = String(response.weatherData?.forecast?.forecastDay[currentDayIndex].day.avghumidity ?? 0)
-        let weatherData = WeatherInfo(temperature: currentTemperature, windSpeed: currentWindSpeed, avghumidity: currentAvg)
-        
-//        let manager = WheaterNetworkManager()
-//        manager.downloadImage(simpleURL: response.weatherData?.forecast?.forecastDay[currentDayIndex].day.condition?.conditionDescription)
-//     
-//        let weatherData = WeatherInfo(temperature: currentItem?.day.temperature, windSpeed: <#T##String#>, avghumidity: String(currentItem?.day.avghumidity ?? 0))
-//        let conditionData = ConditionInfo(condition: <#T##String#>, icon: <#T##String#>)
-//        let forecastData = ForecastInfo(weaterInfo: <#T##[WeatherInfo]#>, conditionInfo: <#T##[ConditionInfo]#>)
+        var weatherInfo = [WeatherInfo]()
+        var conditionIfo = [ConditionInfo]()
+        guard let forecast = response.weatherData?.forecast?.forecastDay else { return }
+        for (index, item) in forecast.enumerated() {
+            let temperature = String.convertDecimal(item.day.temperature)
+            let windSpeed = String.convertDecimal(item.day.maxWindSpeed)
+            let weatherData = WeatherInfo(temperature: temperature ?? "", windSpeed: windSpeed ?? "", avghumidity: String(item.day.avghumidity ?? 0))
+            weatherInfo.append(weatherData)
 
+            let conditionLabel = item.day.condition?.conditionDescription
+            let condition = ConditionInfo(condition: conditionLabel ?? "", icon: response.images[index])
+            conditionIfo.append(condition)
+        }
+        controller?.getViewModel(MainModel.ViewModel(forecast: ForecastInfo(weaterInfo: weatherInfo, conditionInfo: conditionIfo)))
     }
 }

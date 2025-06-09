@@ -32,7 +32,7 @@ enum MainModel {
 
     struct Response {
         var weatherData: WeatherResponse?
-        var icon: UIImage?
+        var images: [UIImage?]
     }
 
     struct ViewModel {

@@ -12,4 +12,18 @@ extension String {
                     options: String.CompareOptions = [.caseInsensitive]) -> Bool {
         return keywords.first { self.range(of: $0, options: options) != nil } != nil
     }
+
+    static func convertDecimal(_ decimal: Decimal?) -> String? {
+        guard let decimal = decimal else { return nil }
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 6
+
+        if let stringValue = formatter.string(from: decimal as NSDecimalNumber) {
+           return stringValue
+        } else {
+            return nil
+        }
+    }
 }

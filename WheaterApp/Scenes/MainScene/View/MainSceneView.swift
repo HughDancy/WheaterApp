@@ -10,8 +10,6 @@ import UIKit
 final class MainSceneView: UIView {
 
    // MARK: - Private properties
-//    private var weatherInfo: WeatherInfo?
-//    private var conditionInfo: ConditionInfo?
     private var forecast: ForecastInfo?
     private var colorInfo: ColorAppearence?
 

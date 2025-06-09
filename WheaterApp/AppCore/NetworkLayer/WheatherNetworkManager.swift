@@ -37,10 +37,11 @@ final class WheaterNetworkManager {
     }
 
     // MARK: - Public method for fetch weather info
-    func testMethod(city: String, compelition: @escaping (WeatherResponse?) -> Void) async  {
-        guard let url = getUrl(city) else {
+    func fetchWeatherInfo(city: String) async -> WeatherResponse?  {
+        guard let newCity = UserDefaults.standard.string(forKey: "CityName"),
+              let url = getUrl(newCity) else {
             print("[WheaterNetworkManager] Error 0 with url")
-            return
+            return nil
         }
 
         do {
@@ -55,9 +56,10 @@ final class WheaterNetworkManager {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             let result = try? JSONDecoder().decode(WeatherResponse.self, from: data)
-            compelition(result)
+            return result
         } catch let error {
             print("[WheaterNetworkManager] Error 1 with fetching data - \(error.localizedDescription)")
+            return nil
         }
     }
     
